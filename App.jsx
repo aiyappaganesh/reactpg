@@ -44,19 +44,26 @@ App = React.createClass({
     });
   },
 
+  createCircle(name) {
+    console.log(name);
+    HTTP.call('POST', 'https://www.googleapis.com/plusDomains/v1/people/me/circles?access_token=ya29.swKdcq13OSvvo5cYN6vYfHlUuwUI9qJ5I5QZuQP1ViubzBTG2q6wfMc8vvkjseecjQ', {data: {'displayName': name} }, function(error, response) {
+      console.log(response);
+    });
+  },
+
   handleSubmit(event) {
     event.preventDefault();
- 
+
     // Find the text field via the React ref
     var fname = React.findDOMNode(this.refs.textInput1).value.trim();
     var lname = React.findDOMNode(this.refs.textInput2).value.trim();
  
-    Tasks.insert({
+    var id = Tasks.insert({
       text: fname+' '+lname,
       createdAt: new Date() // current time
     });
- 
-    // Clear form
+     
+     // Clear form
     var inputs = document.getElementsByTagName('input');
     for (var i = inputs.length - 1; i >= 0; i--) {
       inputs[i].value = "";
