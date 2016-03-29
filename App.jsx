@@ -1,8 +1,16 @@
-const { AppBar, IconButton, IconMenu, LeftNav, SelectField, TextField } = mui;
+const { AppBar, IconButton, IconMenu, LeftNav, SelectField, TextField, RaisedButton, FloatingActionButton } = mui;
 const { MenuItem } = mui.Menus;
-const { NavigationMoreVert } = mui.SvgIcons;
+const { NavigationMoreVert, ContentAdd } = mui.SvgIcons;
 const Styles = mui.Styles;
 const Colors = Styles.Colors;
+
+const buttonStyle = {
+  margin: 12,
+};
+
+const actionButtonStyle = {
+  marginRight: 20,
+};
 
 const jobs = [
   <MenuItem value={'#1234'} primaryText="#1234"/>,
@@ -23,6 +31,35 @@ const services = [
 
 const issueTypes = [
   <MenuItem value={'#1234'} primaryText="#1234"/>
+];
+
+const engineers = [
+  <MenuItem value={'110257721827374623737'} primaryText="Joe"/>,
+  <MenuItem value={'117685299168782698970'} primaryText="Josephine"/>,
+  <MenuItem value={'101967792556257735208'} primaryText="Jeremy"/>,
+  <MenuItem value={'103387629180365578874'} primaryText="Jhon"/>,
+  <MenuItem value={'101447084593147265288'} primaryText="James"/>,
+  <MenuItem value={'102417683683083682579'} primaryText="Jenny"/>,
+  <MenuItem value={'115781491509522514753'} primaryText="Jeff"/>,
+  <MenuItem value={'105193078925726528104'} primaryText="Jason"/>,
+  <MenuItem value={'109061817072269062716'} primaryText="Jenna"/>
+];
+
+const customers = [
+  <MenuItem value={'103764585826277201640'} primaryText="Rick"/>,
+  <MenuItem value={'108560908635605545932'} primaryText="Robert"/>,
+  <MenuItem value={'102345940077083980832'} primaryText="Ryan"/>,
+  <MenuItem value={'107612119418245526899'} primaryText="Rachel"/>,
+  <MenuItem value={'108612246962932756480'} primaryText="Rose"/>
+];
+
+const experts = [
+  <MenuItem value={'112739138406530779564'} primaryText="TWC"/>,
+  <MenuItem value={'110132770680215220078'} primaryText="Cisco"/>,
+  <MenuItem value={'108741317245837764468'} primaryText="Verizon"/>,
+  <MenuItem value={'112043759976089842597'} primaryText="Belkin"/>,
+  <MenuItem value={'103675625919779944270'} primaryText="Apple"/>,
+  <MenuItem value={'118014758899268715696'} primaryText="Netgear"/>
 ];
 
 // App component - represents the whole app
@@ -77,7 +114,10 @@ App = React.createClass({
   getInitialState() {
     return {
       job_id: -1,
-      issue_type: -1
+      issue_type: -1,
+      service: -1,
+      engineer: -1,
+      customer: -1
     };
   },
  
@@ -97,6 +137,14 @@ App = React.createClass({
 
   handleServiceChange(event, index, value) {
     this.setState({service: value});
+  },
+
+  handleEngineerChange(event, index, value) {
+    this.setState({engineer: value});
+  },
+
+  handleCustomerChange(event, index, value) {
+    this.setState({customer: value});
   },
  
   render() {
@@ -123,7 +171,7 @@ App = React.createClass({
                     hintText="Job Location"
                     floatingLabelText="Job Location:"
                     ref="geo-location" id="geo-location"
-                  /><br/>
+                  />
                 </div>
                 
                 <div className="form-group">
@@ -137,9 +185,14 @@ App = React.createClass({
                       <div ref="equipments" id="equipments" className="panel-collapse collapse">
                         <div className="itemslist">
                         </div>
-                        <label for="equipment">Equipment:</label>
-                        <input type="text" className="form-control item" ref="equipment" id="equipment"/>
-                        <button className="add-item-button btn btn-default" ref="add-equipment" id="add-equipment">Add Equipment</button>
+                        <TextField
+                          hintText="Equipment"
+                          floatingLabelText="Equipment:"
+                          ref="equipment" id="equipment"
+                        />
+                        <FloatingActionButton mini={true} style={actionButtonStyle} ref="add-equipment" id="add-equipment">
+                          <ContentAdd />
+                        </FloatingActionButton>
                       </div>
                     </div>
                   </div>
@@ -151,16 +204,16 @@ App = React.createClass({
                   </SelectField>
                 </div>
                 <div className="form-group">
-                  <label for="engineer">Engineer:</label>
-                  <select className="form-control" ref="engineer" id="engineer">
-                    <option value="-1">Select Engineer</option>
-                  </select>
+                  <SelectField hintText="Select Engineer" floatingLabelText="Engineer:" ref="engineer" id="engineer" value={this.state.engineer}
+          onChange={this.handleEngineerChange}>
+                    {engineers}
+                  </SelectField>
                 </div>
                 <div className="form-group">
-                  <label for="customer">Customer:</label>
-                  <select className="form-control" ref="customer" id="customer">
-                    <option value="-1">Select Customer</option>
-                  </select>
+                  <SelectField hintText="Select Customer" floatingLabelText="Customer:" ref="customer" id="customer" value={this.state.customer}
+          onChange={this.handleCustomerChange}>
+                    {customers}
+                  </SelectField>
                 </div>
                 <div className="form-group">
                   <div className="panel-group">
@@ -173,9 +226,14 @@ App = React.createClass({
                       <div ref="customernotes" id="customernotes" className="panel-collapse collapse">
                         <div className="itemslist">
                         </div>
-                        <label for="notes">New note:</label>
-                        <textarea className="form-control item" rows="5" ref="notes" id="notes"></textarea>
-                        <button className="add-item-button btn btn-default circle-parameter" ref="add-customer-note" id="add-customer-note">Add Note</button>
+                        <TextField
+                          hintText="New Note"
+                          floatingLabelText="New Note:"
+                          ref="notes" id="notes"
+                        />
+                        <FloatingActionButton mini={true} style={actionButtonStyle} ref="add-customer-note" id="add-customer-note">
+                          <ContentAdd />
+                        </FloatingActionButton>
                       </div>
                     </div>
                   </div>
@@ -190,21 +248,29 @@ App = React.createClass({
                       </div>
                       <div ref="ticketdocuments" id="ticketdocuments" className="panel-collapse collapse">
                         <div className="itemslist"></div>
-                        <label for="document">Name:</label>
-                        <input type="text" className="form-control item-part" ref="ticketdocument-name" id="ticketdocument-name" onchange="$('#ticketdocument').val($('#ticketdocument-name').val()+' :: '+$('#ticketdocument-url').val());"/>
-                        <label for="document">URL:</label>
-                        <input type="text" className="form-control item-part" ref="ticketdocument-url" id="ticketdocument-url" onchange="$('#ticketdocument').val($('#ticketdocument-name').val()+' :: '+$('#ticketdocument-url').val());"/>
                         <input type="hidden" className="form-control item" ref="ticketdocument" id="ticketdocument"/>
-                        <button className="add-item-button btn btn-default" ref="add-ticket-document" id="add-ticket-document">Add Document</button>
+                        <TextField
+                          hintText="Name"
+                          floatingLabelText="Name:"
+                          ref="ticketdocument-name" id="ticketdocument-name"
+                        />
+                        <TextField
+                          hintText="URL"
+                          floatingLabelText="URL:"
+                          ref="ticketdocument-url" id="ticketdocument-url"
+                        />
+                        <FloatingActionButton mini={true} style={actionButtonStyle} ref="add-ticket-document" id="add-ticket-document">
+                          <ContentAdd />
+                        </FloatingActionButton>
                       </div>
                     </div>
                   </div>
                 </div>
-                <input
-                  type="submit"
-                  ref="submit"
-                  id="submit"
-                  value="Submit" />
+                <RaisedButton
+                label="Submit"
+                style={buttonStyle}
+                ref="submit" id="submit"
+                />
               </form>
           </div>
           <div className="col-xs-5 circles-section">

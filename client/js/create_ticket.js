@@ -1,16 +1,6 @@
 var job_deets = {};
 
 $(document).ready(function() {
-  $.get('/people/get', function(data){
-    var people = JSON.parse(data);
-    populatePeople(people.engineers, '#engineer');
-    populatePeople(people.customers, '#customer');
-  });
-
-  $.get('/tags/get', function(data){
-    var tags = JSON.parse(data);
-    populatePeople(tags, '#issue-type');
-  });
 
   $('form input').keydown(function(event){
     if(event.keyCode == 13) {
