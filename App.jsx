@@ -30,7 +30,12 @@ const services = [
 ];
 
 const issueTypes = [
-  <MenuItem value={'#1234'} primaryText="#1234"/>
+  <MenuItem value={'installation'} primaryText="Installation"/>,
+  <MenuItem value={'repair/maintenance'} primaryText="Repair/Maintenance"/>,
+  <MenuItem value={'replacement'} primaryText="Replacement"/>,
+  <MenuItem value={'delivery'} primaryText="Delivery"/>,
+  <MenuItem value={'meter reading'} primaryText="Meter Reading"/>,
+  <MenuItem value={'estimate/inspection'} primaryText="Estimate/Inspection"/>
 ];
 
 const engineers = [
@@ -163,7 +168,7 @@ App = React.createClass({
                 <div className="form-group">
                   <SelectField hintText="Select Issue Type" floatingLabelText="Issue type:" ref="issue-type" id="issue-type" value={this.state.issue_type}
           onChange={this.handleIssueTypeChange}>
-                    {jobs}
+                    {issueTypes}
                   </SelectField>
                 </div>
                 <div className="form-group">
