@@ -1,4 +1,4 @@
-const { AppBar, IconButton, IconMenu, LeftNav, SelectField, TextField, RaisedButton, FloatingActionButton } = mui;
+const { AppBar, IconButton, IconMenu, LeftNav, SelectField, TextField, RaisedButton, FloatingActionButton, Card, CardActions, CardHeader, CardText } = mui;
 const { MenuItem } = mui.Menus;
 const { NavigationMoreVert, ContentAdd } = mui.SvgIcons;
 const Styles = mui.Styles;
@@ -180,27 +180,27 @@ App = React.createClass({
                 </div>
                 
                 <div className="form-group">
-                  <div className="panel-group">
-                    <div className="panel panel-default">
-                      <div className="panel-heading">
-                        <h4 className="panel-title">
-                        <a data-toggle="collapse" href="#equipments">Equipments involved</a>
-                        </h4>
+                  <Card>
+                    <CardHeader
+                      title="Equipments involved"
+                      actAsExpander={true}
+                      showExpandableButton={true}
+                    />
+                    <CardText ref="equipments" id="equipments" expandable={true}>
+                      <div className="itemslist">
                       </div>
-                      <div ref="equipments" id="equipments" className="panel-collapse collapse">
-                        <div className="itemslist">
-                        </div>
-                        <TextField
-                          hintText="Equipment"
-                          floatingLabelText="Equipment:"
-                          ref="equipment" id="equipment"
-                        />
-                        <FloatingActionButton mini={true} style={actionButtonStyle} ref="add-equipment" id="add-equipment">
-                          <ContentAdd />
-                        </FloatingActionButton>
-                      </div>
-                    </div>
-                  </div>
+                    </CardText>
+                    <CardActions expandable={true}>
+                      <TextField
+                        hintText="Equipment"
+                        floatingLabelText="Equipment:"
+                        ref="equipment" id="equipment"
+                      />
+                      <FloatingActionButton mini={true} style={actionButtonStyle} ref="add-equipment" id="add-equipment">
+                        <ContentAdd />
+                      </FloatingActionButton>
+                    </CardActions>
+                  </Card>
                 </div>
                 <div className="form-group">
                   <SelectField hintText="Select Service Type" floatingLabelText="Service:" ref="service" id="service" value={this.state.service}
@@ -221,55 +221,56 @@ App = React.createClass({
                   </SelectField>
                 </div>
                 <div className="form-group">
-                  <div className="panel-group">
-                    <div className="panel panel-default">
-                      <div className="panel-heading">
-                        <h4 className="panel-title">
-                        <a data-toggle="collapse" href="#customernotes">Issue notes</a>
-                        </h4>
+                  <Card>
+                    <CardHeader
+                      title="Issue notes"
+                      actAsExpander={true}
+                      showExpandableButton={true}
+                    />
+                    <CardText ref="customernotes" id="customernotes" expandable={true}>
+                      <div className="itemslist">
                       </div>
-                      <div ref="customernotes" id="customernotes" className="panel-collapse collapse">
-                        <div className="itemslist">
-                        </div>
-                        <TextField
-                          hintText="New Note"
-                          floatingLabelText="New Note:"
-                          ref="notes" id="notes"
-                        />
-                        <FloatingActionButton mini={true} style={actionButtonStyle} ref="add-customer-note" id="add-customer-note">
-                          <ContentAdd />
-                        </FloatingActionButton>
-                      </div>
-                    </div>
-                  </div>
+                    </CardText>
+                    <CardActions expandable={true}>
+                      <TextField
+                        hintText="New Note"
+                        floatingLabelText="New Note:"
+                        ref="notes" id="notes"
+                      />
+                      <FloatingActionButton mini={true} style={actionButtonStyle} ref="add-customer-note" id="add-customer-note">
+                        <ContentAdd />
+                      </FloatingActionButton>
+                    </CardActions>
+                  </Card>
                 </div>
                 <div className="form-group">
-                  <div className="panel-group">
-                    <div className="panel panel-default">
-                      <div className="panel-heading">
-                        <h4 className="panel-title">
-                        <a data-toggle="collapse" href="#ticketdocuments">Ticket documents</a>
-                        </h4>
+                  <Card>
+                    <CardHeader
+                      title="Ticket documents"
+                      actAsExpander={true}
+                      showExpandableButton={true}
+                    />
+                    <CardText ref="ticketdocuments" id="ticketdocuments" expandable={true}>
+                      <div className="itemslist">
                       </div>
-                      <div ref="ticketdocuments" id="ticketdocuments" className="panel-collapse collapse">
-                        <div className="itemslist"></div>
-                        <input type="hidden" className="form-control item" ref="ticketdocument" id="ticketdocument"/>
-                        <TextField
-                          hintText="Name"
-                          floatingLabelText="Name:"
-                          ref="ticketdocument-name" id="ticketdocument-name"
-                        />
-                        <TextField
-                          hintText="URL"
-                          floatingLabelText="URL:"
-                          ref="ticketdocument-url" id="ticketdocument-url"
-                        />
-                        <FloatingActionButton mini={true} style={actionButtonStyle} ref="add-ticket-document" id="add-ticket-document">
-                          <ContentAdd />
-                        </FloatingActionButton>
-                      </div>
-                    </div>
-                  </div>
+                      <input type="hidden" className="form-control item" ref="ticketdocument" id="ticketdocument"/>
+                    </CardText>
+                    <CardActions expandable={true}>
+                      <TextField
+                        hintText="Name"
+                        floatingLabelText="Name:"
+                        ref="ticketdocument-name" id="ticketdocument-name"
+                      />
+                      <TextField
+                        hintText="URL"
+                        floatingLabelText="URL:"
+                        ref="ticketdocument-url" id="ticketdocument-url"
+                      />
+                      <FloatingActionButton mini={true} style={actionButtonStyle} ref="add-ticket-document" id="add-ticket-document">
+                        <ContentAdd />
+                      </FloatingActionButton>
+                    </CardActions>
+                  </Card>
                 </div>
                 <RaisedButton
                 label="Submit"
