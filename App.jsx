@@ -67,6 +67,14 @@ const experts = [
   <MenuItem value={'118014758899268715696'} primaryText="Netgear"/>
 ];
 
+const job_id_map = {
+  '#1234':{'location':{'addr':'300 Madison Ave, New York, NY 10016', 'lat':'40.752896', 'lon':'-73.9822427'},'issue':{'type':'repair/maintenance'}, 'equipments':['Widget Box 2', 'Analyzer A', 'Monitor Plus 1.0', 'Toolkit Z'], 'services':['Mid Sized Business Plus Package'], 'engineer':{'id':'110257721827374623737', 'name':'Joe'}, 'customer':{'id':'103764585826277201640', 'name':'Rick'}, 'notes':["The main unit is located in the basement and requires a landlord's approval to enter.", "Customer is tech-savvy and independent. Customer knows a lot about the services and wants to understand what the field techs are doing and why they are doing it."], 'documents':['Cisco manual :: http://www.cisco.com/c/dam/en/us/td/docs/routers/csbr/wrv54g/user/guide/wrv54g_ug.pdf', 'Router troubleshooting Doc :: https://docs.google.com/document/d/19-UiF6HSXfwPHfEZs_XlFl21fE4aEG46r48fmQyl-5c/edit']},
+  '#2345':{'location':{'addr':'823 11th Ave, New York, NY 10019, USA', 'lat':'40.770048', 'lon':'-73.992164'},'issue':{'type':'installation'}, 'equipments':['Machine 2', 'Analyzer A', 'Monitor Plus 1.0', 'Apparatus v2'], 'services':['Small Business Basics'], 'engineer':{'id':'110257721827374623737', 'name':'Joe'}, 'customer':{'id':'108560908635605545932', 'name':'Robert'}, 'notes':["The main unit is located in the basement and requires a landlord's approval to enter.", "Customer is tech-savvy and independent. Customer knows a lot about the services and wants to understand what the field techs are doing and why they are doing it."], 'documents':['Cisco manual :: http://www.cisco.com/c/dam/en/us/td/docs/routers/csbr/wrv54g/user/guide/wrv54g_ug.pdf', 'Router troubleshooting Doc :: https://docs.google.com/document/d/19-UiF6HSXfwPHfEZs_XlFl21fE4aEG46r48fmQyl-5c/edit']},
+  '#3456':{'location':{'addr':'445 W 59th St, New York, NY 10019, USA', 'lat':'40.770288', 'lon':'-73.986705'},'issue':{'type':'repair/maintenance'}, 'equipments':['Machine 1', 'Toolkit A3'], 'services':['Home Essentials Package'], 'engineer':{'id':'110257721827374623737', 'name':'Joe'}, 'customer':{'id':'102345940077083980832', 'name':'Ryan'}, 'notes':["The main unit is located in the basement and requires a landlord's approval to enter.", "Customer is tech-savvy and independent. Customer knows a lot about the services and wants to understand what the field techs are doing and why they are doing it."], 'documents':['Cisco manual :: http://www.cisco.com/c/dam/en/us/td/docs/routers/csbr/wrv54g/user/guide/wrv54g_ug.pdf', 'Router troubleshooting Doc :: https://docs.google.com/document/d/19-UiF6HSXfwPHfEZs_XlFl21fE4aEG46r48fmQyl-5c/edit']},
+  '#4567':{'location':{'addr':'665 5th Ave, New York, NY 10022, USA', 'lat':'40.760084', 'lon':'-73.975604'},'issue':{'type':'repair/maintenance'}, 'equipments':['Appliance 1', 'Toolkit X', "10' Cables"], 'services':['Enterprise Economy Bundle'], 'engineer':{'id':'110257721827374623737', 'name':'Joe'}, 'customer':{'id':'107612119418245526899', 'name':'Rachel'}, 'notes':["The main unit is located in the basement and requires a landlord's approval to enter.", "Customer is tech-savvy and independent. Customer knows a lot about the services and wants to understand what the field techs are doing and why they are doing it."], 'documents':['Cisco manual :: http://www.cisco.com/c/dam/en/us/td/docs/routers/csbr/wrv54g/user/guide/wrv54g_ug.pdf', 'Router troubleshooting Doc :: https://docs.google.com/document/d/19-UiF6HSXfwPHfEZs_XlFl21fE4aEG46r48fmQyl-5c/edit']},
+  '#5678':{'location':{'addr':'524 Park Ave, New York, NY 10065, USA', 'lat':'40.763868', 'lon':'-73.969638'},'issue':{'type':'estimate/inspection'}, 'equipments':['Appliance Model 2', 'Tracker Module', 'Receipt Pad'], 'services':['Diamond Enterprise Bundle'], 'engineer':{'id':'110257721827374623737', 'name':'Joe'}, 'customer':{'id':'108612246962932756480', 'name':'Rose'}, 'notes':["The main unit is located in the basement and requires a landlord's approval to enter.", "Customer is tech-savvy and independent. Customer knows a lot about the services and wants to understand what the field techs are doing and why they are doing it."], 'documents':['Cisco manual :: http://www.cisco.com/c/dam/en/us/td/docs/routers/csbr/wrv54g/user/guide/wrv54g_ug.pdf', 'Router troubleshooting Doc :: https://docs.google.com/document/d/19-UiF6HSXfwPHfEZs_XlFl21fE4aEG46r48fmQyl-5c/edit']}
+}
+
 // App component - represents the whole app
 App = React.createClass({
   // This mixin makes the getMeteorData method work
@@ -122,7 +130,8 @@ App = React.createClass({
       issue_type: -1,
       service: -1,
       engineer: -1,
-      customer: -1
+      customer: -1,
+      location: ''
     };
   },
  
@@ -134,6 +143,32 @@ App = React.createClass({
 
   handleJobChange(event, index, value) {
     this.setState({job_id: value});
+    this.clearForm();
+    job_deets = job_id_map[value];
+    console.log(job_deets);
+    console.log('set geo-location');
+    //codeAddress();
+    console.log('coded address');
+    this.setState(
+      {
+        issue_type: job_deets.issue.type,
+        service: job_deets.services[0],
+        engineer: job_deets.engineer.id,
+        customer: job_deets.customer.id,
+        location: job_deets.location.addr
+      }
+    );
+    console.log('set issue-type');
+    $('#issue-type').change();
+    console.log('changed issue-type');
+    //addItemsFor('equipments', job_deets.equipments);
+    //addItemsFor('customernotes', job_deets.notes);
+    //circleParameterChanged();
+    //addItemsFor('ticketdocuments', job_deets.documents);
+  },
+
+  handleLocationChange(event, index, value) {
+    this.setState({location: value});
   },
 
   handleIssueTypeChange(event, index, value) {
@@ -150,6 +185,10 @@ App = React.createClass({
 
   handleCustomerChange(event, index, value) {
     this.setState({customer: value});
+  },
+
+  clearForm() {
+
   },
  
   render() {
@@ -176,6 +215,8 @@ App = React.createClass({
                     hintText="Job Location"
                     floatingLabelText="Job Location:"
                     ref="geo-location" id="geo-location"
+                    value={this.state.location}
+                    onChange={this.handleLocationChange}
                   />
                 </div>
                 
